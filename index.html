@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>West Village Vlog 熟語帳</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: sticky "now studying" strip on top, card grid below. Lessons coded like NYC subway line bullets. */
+:root {
+  --bg: #eef0f2;
+  --surface: #ffffff;
+  --ink: #15181d;
+  --muted: #5d6570;
+  --line: #d9dde2;
+  --bar: #15181d;
+  --bar-ink: #f3f4f6;
+  --bar-muted: #9aa3ad;
+  --bar-field: #252a31;
+  --accent: #0039a6;
+  --soft: #f5f6f8;
+  --l1: #ff6319; --l2: #0039a6; --l3: #00933c; --l4: #fccc0a; --l5: #ee352e;
+  --l4-ink: #15181d;
+  --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+  --body: "Zen Kaku Gothic New", "Hiragino Sans", "Noto Sans JP", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111418; --surface: #1a1e24; --ink: #e9ecef; --muted: #98a1ab; --line: #2c323a;
+  --bar: #0a0c0f; --bar-ink: #f3f4f6; --bar-muted: #8b949e; --bar-field: #1d2229;
+  --accent: #6d9cff; --soft: #22272e; --l2: #3f6fd6; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111418; --surface: #1a1e24; --ink: #e9ecef; --muted: #98a1ab; --line: #2c323a;
+  --bar: #0a0c0f; --bar-ink: #f3f4f6; --bar-muted: #8b949e; --bar-field: #1d2229;
+  --accent: #6d9cff; --soft: #22272e; --l2: #3f6fd6; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); line-height: 1.6; font-size: 15px; padding-bottom: env(safe-area-inset-bottom, 0px); }
+.wrap { max-width: 1140px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+.bar { position: sticky; top: 0; z-index: 10; background: var(--bar); color: var(--bar-ink); padding-top: env(safe-area-inset-top, 0px); }
+.bar .wrap { padding-block: 14px; display: grid; gap: 12px; }
+.title-row { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.title-row h1 { font-family: var(--display); font-size: 1.25rem; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+.title-row .meta { color: var(--bar-muted); font-size: 0.8rem; }
+
+.now { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; background: var(--bar-field); border-radius: 10px; padding: 10px 14px; }
+.now-main { min-width: 0; }
+.now-label { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bar-muted); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.now-phrase { font-family: var(--display); font-weight: 700; font-size: 1.15rem; margin-top: 2px; }
+.now-sub { font-size: 0.82rem; color: var(--bar-muted); margin-top: 2px; }
+.yt { display: inline-flex; align-items: center; gap: 6px; background: var(--l5); color: #fff; text-decoration: none; font-weight: 700; font-size: 0.85rem; padding: 9px 14px; border-radius: 8px; white-space: nowrap; }
+.yt:hover { filter: brightness(1.08); }
+.yt[aria-disabled="true"] { opacity: 0.35; pointer-events: none; }
+@media (max-width: 560px) { .now { grid-template-columns: 1fr; } .yt { justify-content: center; } }
+
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.controls input, .controls select { font: inherit; font-size: 0.85rem; background: var(--bar-field); color: var(--bar-ink); border: 1px solid #3a414a; border-radius: 8px; padding: 7px 10px; }
+.controls input { flex: 1 1 180px; min-width: 0; }
+.tbtn { font: inherit; font-size: 0.82rem; font-weight: 700; background: transparent; color: var(--bar-ink); border: 1px solid #3a414a; border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.tbtn[aria-pressed="true"] { background: var(--bar-ink); color: var(--bar); border-color: var(--bar-ink); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.progress { display: flex; align-items: center; gap: 10px; font-size: 0.8rem; color: var(--bar-muted); margin-left: auto; font-variant-numeric: tabular-nums; }
+.track { width: 110px; height: 6px; background: #3a414a; border-radius: 3px; overflow: hidden; }
+.fill { height: 100%; background: var(--l3); width: 0; transition: width .3s; }
+
+main .wrap { padding-block: 20px 48px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 14px; }
+.empty { color: var(--muted); padding: 40px 0; text-align: center; }
+
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.card.on { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.card.done { opacity: 0.6; }
+.head { display: flex; align-items: center; gap: 8px; }
+.bullet { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 0.82rem; color: #fff; flex: none; }
+.bullet.l4 { color: var(--l4-ink); }
+.no { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+.pos { font-size: 0.72rem; font-weight: 700; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; }
+.time { margin-left: auto; font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+.phrase { font-family: var(--display); font-weight: 700; font-size: 1.2rem; line-height: 1.3; text-wrap: balance; }
+.ans { border-top: 1px dashed var(--line); padding-top: 8px; display: grid; gap: 6px; }
+.masking .ans.masked > * { filter: blur(6px); user-select: none; }
+.masking .ans { cursor: pointer; }
+.meaning { font-weight: 700; color: var(--accent); }
+.note { font-size: 0.85rem; color: var(--muted); }
+.ex { background: var(--soft); border-radius: 6px; padding: 8px 10px; font-size: 0.85rem; }
+.ex-en { font-weight: 500; }
+.ex-ja { color: var(--muted); }
+.foot { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 4px; flex-wrap: wrap; }
+.foot label { display: flex; gap: 6px; align-items: center; font-size: 0.85rem; color: var(--muted); cursor: pointer; }
+.cbtn { font: inherit; font-size: 0.8rem; font-weight: 700; border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+.cbtn:hover { border-color: var(--accent); color: var(--accent); }
+.foot a { margin-left: auto; font-size: 0.8rem; font-weight: 700; color: var(--accent); text-decoration: none; }
+.foot a:hover { text-decoration: underline; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <div class="title-row">
+      <h1>West Village Vlog 熟語帳</h1>
+      <span class="meta">NYの1日Vlogから拾った熟語 · 5レッスン</span>
+    </div>
+    <div class="now" aria-live="polite">
+      <div class="now-main">
+        <div class="now-label"><span id="npStatus">カードの「この場面」を押すと選択</span><span id="npTime"></span></div>
+        <div class="now-phrase" id="npPhrase">フレーズ未選択</div>
+        <div class="now-sub" id="npSub">選んだ熟語の例文がここに出ます</div>
+      </div>
+      <a class="yt" id="npLink" href="https://www.youtube.com/watch?v=ADXmnbZMeO8" target="_blank" rel="noopener" aria-disabled="true">▶ YouTubeでこの場面を見る</a>
+    </div>
+    <div class="controls">
+      <input type="text" id="search" placeholder="英語・日本語で検索" aria-label="検索">
+      <select id="lessonFilter" aria-label="レッスン">
+        <option value="all">全レッスン</option>
+        <option value="1">L1 街歩き</option>
+        <option value="2">L2 NYの思い出</option>
+        <option value="3">L3 ゴルフ練習場</option>
+        <option value="4">L4 食事・公園</option>
+        <option value="5">L5 SNSのアドバイス</option>
+      </select>
+      <button class="tbtn" id="maskBtn" aria-pressed="false">意味を隠す</button>
+      <button class="tbtn" id="unlearnedBtn" aria-pressed="false">未習得のみ</button>
+      <div class="progress"><span id="statsText">習得 0 / 0</span><div class="track"><div class="fill" id="fill"></div></div></div>
+    </div>
+  </div>
+</header>
+
+<main><div class="wrap"><div class="grid" id="cardGrid"></div></div></main>
+
+<script>
+const rawIdioms = [
+  { id: 1, lesson: 1, time: "00:00:17", sec: 17, endSec: 68, phrase: "end up", pos: "句動詞", meaning: "結局〜になる・最終的に〜に行き着く", note: "最初から予定していたわけではなく、結果的にそうなったことを表す。", exEn: "So I ended up in the West Village.", exJa: "ということで、結局ウェスト・ヴィレッジに来ました。" },
+  { id: 2, lesson: 1, time: "00:00:17", sec: 17, endSec: 68, phrase: "Like I said", pos: "表現", meaning: "さっき言ったように", note: "すでに話した内容をもう一度確認するときに使う。", exEn: "Like I said, I have no plan for today.", exJa: "さっき言ったように、今日は何の予定もありません。" },
+  { id: 3, lesson: 1, time: "00:01:10", sec: 70, endSec: 100, phrase: "Do you guys like it?", pos: "表現", meaning: "これ気に入った？", note: "you guys は複数の視聴者に対するカジュアルな呼びかけ。", exEn: "Also, I have a new camera. Do you guys like it?", exJa: "それと、新しいカメラがあります。みんなこれ好き？" },
+  { id: 4, lesson: 1, time: "00:01:10", sec: 70, endSec: 100, phrase: "Can you tell?", pos: "表現", meaning: "分かる？・気づく？", note: "ここでは「新しいカメラになったことに気づく？」という意味。「違いに気づく？」でも頻出。", exEn: "Do you guys like it? Can you tell?", exJa: "みんなこれ好き？違い分かる？" },
+  { id: 5, lesson: 1, time: "00:01:41", sec: 101, endSec: 149, phrase: "send someone something", pos: "表現", meaning: "人に物を送る", note: "Canon sent me this camera. で「Canonが私にこのカメラを送ってくれた」。", exEn: "Canon sent me this camera, guys.", exJa: "Canonがこのカメラを送ってくれたんです。" },
+  { id: 6, lesson: 1, time: "00:01:41", sec: 101, endSec: 149, phrase: "the biggest moment of my career", pos: "表現", meaning: "キャリア最大の瞬間・出来事", note: "the + 最上級 で「最も〜な」。", exEn: "Probably the biggest moment of my career. That is, like, crazy.", exJa: "私のキャリアの中でも、たぶん一番大きな出来事。これは本当にすごい。" },
+  { id: 7, lesson: 1, time: "00:02:30", sec: 150, endSec: 189, phrase: "literally", pos: "副詞", meaning: "本当に・文字通り", note: "ここでは「本当にずっと」という強調に使われている。", exEn: "I've literally used Canon since I started my YouTube journey.", exJa: "YouTubeを始めてから、本当にずっとCanonを使ってきました。" },
+  { id: 8, lesson: 1, time: "00:02:30", sec: 150, endSec: 189, phrase: "since", pos: "前置詞・接続詞", meaning: "〜以来・〜してから", note: "since + 過去の出来事 + 現在完了 で「〜して以来ずっと」。", exEn: "I've literally used Canon since I started my YouTube journey.", exJa: "YouTubeを始めてから、本当にずっとCanonを使ってきました。" },
+  { id: 9, lesson: 1, time: "00:03:10", sec: 190, endSec: 225, phrase: "nowhere", pos: "副詞", meaning: "どこにも〜ない・どこへも〜ない", note: "I'm going nowhere. なら「どこにも行く予定がない」という意味。", exEn: "I'm walking nowhere.", exJa: "特にどこへ向かってるわけでもなく歩いてます。" },
+  { id: 10, lesson: 1, time: "00:03:10", sec: 190, endSec: 225, phrase: "apartment building", pos: "名詞", meaning: "アパート・集合住宅の建物", note: "apartment が「部屋」を指すのに対し、apartment building は建物全体。", exEn: "Oh, I think this is the Friends apartment building.", exJa: "あ、ここが『フレンズ』のアパートの建物だと思う。" },
+  { id: 11, lesson: 1, time: "00:03:46", sec: 226, endSec: 250, phrase: "right there", pos: "表現", meaning: "まさにあそこ", note: "there に right を加えることで場所を強調している。", exEn: "I think right there, right? Somewhere up there.", exJa: "あそこだよね？あの辺のどこか。" },
+  { id: 12, lesson: 1, time: "00:03:46", sec: 226, endSec: 250, phrase: "somewhere up there", pos: "表現", meaning: "あの上のどこか・あの辺のどこか", note: "正確な場所が分からないときの言い方。", exEn: "I think right there, right? Somewhere up there.", exJa: "あそこだよね？あの辺のどこか。" },
+  { id: 13, lesson: 1, time: "00:04:11", sec: 251, endSec: 302, phrase: "used to live", pos: "表現", meaning: "以前住んでいた", note: "昔はそうだったが、今はもうそうではないことを表す（used to + 動詞）。", exEn: "I used to live over here, guys.", exJa: "私、昔この辺に住んでたんです。" },
+  { id: 14, lesson: 1, time: "00:04:11", sec: 251, endSec: 302, phrase: "over here", pos: "表現", meaning: "この辺に・こっちに", note: "話し手のいる場所や指している場所をざっくり示す。", exEn: "I used to live over here, guys. This was my first neighborhood that I moved to in New York.", exJa: "私、昔この辺に住んでたんです。ここがニューヨークで最初に引っ越してきた地区でした。" },
+  { id: 15, lesson: 1, time: "00:05:03", sec: 303, endSec: 341, phrase: "would always ~", pos: "表現", meaning: "いつも〜していた", note: "過去の習慣を表す would。「昔はいつも〜していた」という意味。", exEn: "And I would always go to the Brandy Cafe, and it just reopened apparently.", exJa: "それで、いつもBrandy Cafeに行ってたんだけど、どうやらちょうど再オープンしたみたい。" },
+  { id: 16, lesson: 1, time: "00:05:03", sec: 303, endSec: 341, phrase: "apparently", pos: "副詞", meaning: "どうやら・聞いたところでは", note: "自分で直接確認したわけではなく、得た情報から判断しているニュアンス。", exEn: "And I would always go to the Brandy Cafe, and it just reopened apparently.", exJa: "それで、いつもBrandy Cafeに行ってたんだけど、どうやらちょうど再オープンしたみたい。" },
+  { id: 17, lesson: 1, time: "00:05:42", sec: 342, endSec: 401, phrase: "If you didn't know", pos: "表現", meaning: "知らなかったかもしれないけど", note: "視聴者に新しい情報を紹介するときのカジュアルな言い方。", exEn: "Yes, Brandy Melville has a cafe. If you didn't know, it kind of blew my mind when I discovered this.", exJa: "そう、Brandy Melvilleにはカフェがあるんです。知らなかった人もいると思うけど、これを知ったときはちょっと衝撃だった。" },
+  { id: 18, lesson: 1, time: "00:05:42", sec: 342, endSec: 401, phrase: "blow one's mind", pos: "イディオム", meaning: "衝撃を与える・ものすごく驚かせる", note: "直訳は「頭を吹き飛ばす」だが、実際には「めちゃくちゃ驚く・衝撃を受ける」。", exEn: "It kind of blew my mind when I discovered this. I used to go all the time.", exJa: "これを知ったときはちょっと衝撃だった。昔は本当によく行ってた。" },
+  { id: 19, lesson: 1, time: "00:06:42", sec: 402, endSec: 450, phrase: "Now that ~", pos: "接続詞", meaning: "今や〜なので・せっかく〜したので", note: "「今この状況になったから、それをきっかけに」というニュアンス。", exEn: "Now that I'm here, I feel like I need to go solely for nostalgic purposes.", exJa: "せっかくここに来たんだから、懐かしさを味わうためだけでも行かなきゃって気がする。" },
+  { id: 20, lesson: 1, time: "00:06:42", sec: 402, endSec: 450, phrase: "for nostalgic purposes", pos: "表現", meaning: "懐かしさを味わうために、思い出目的で", note: "「実用的な理由ではなく、思い出のため」というニュアンス。", exEn: "Now that I'm here, I feel like I need to go solely for nostalgic purposes.", exJa: "せっかくここに来たんだから、懐かしさを味わうためだけでも行かなきゃって気がする。" },
+  { id: 21, lesson: 2, time: "00:07:40", sec: 460, endSec: 519, phrase: "feel so good to be back", pos: "表現", meaning: "戻ってこられて本当に嬉しい", note: "feel good to + 動詞 で「〜できて嬉しい・気分がいい」。", exEn: "Guys, it feels so good to be back here.", exJa: "みんな、ここに戻ってこられて本当に嬉しい。" },
+  { id: 22, lesson: 2, time: "00:07:40", sec: 460, endSec: 519, phrase: "close ~ down", pos: "句動詞", meaning: "〜を閉店・閉鎖する", note: "お店や施設などを営業停止にするときに使う。", exEn: "They actually closed this cafe down for, I think, like, six months.", exJa: "ここ、実は6か月くらい閉まってたんだよね。" },
+  { id: 23, lesson: 2, time: "00:08:40", sec: 520, endSec: 565, phrase: "the exact same", pos: "表現", meaning: "全く同じ", note: "exact が same を強調して「完全に同じ」というニュアンス。", exEn: "It looks the exact same now. If anyone knows, please tell me.", exJa: "今も全く同じように見える。もし誰か理由を知ってたら教えて。" },
+  { id: 24, lesson: 2, time: "00:08:40", sec: 520, endSec: 565, phrase: "If anyone knows", pos: "表現", meaning: "もし誰か知っていたら", note: "視聴者に情報を求めるときにもよく使う。", exEn: "It looks the exact same now. If anyone knows, please tell me.", exJa: "今も全く同じように見える。もし誰か理由を知ってたら教えて。" },
+  { id: 25, lesson: 2, time: "00:09:26", sec: 566, endSec: 601, phrase: "be glad that ~", pos: "表現", meaning: "〜で嬉しい・〜を喜んでいる", note: "happy より少し落ち着いた「嬉しい」というニュアンス。", exEn: "I'm so glad that they're back. My prayers were answered.", exJa: "また戻ってきてくれて本当に嬉しい。願いが叶ったよ。" },
+  { id: 26, lesson: 2, time: "00:09:26", sec: 566, endSec: 601, phrase: "My prayers were answered", pos: "イディオム", meaning: "願いが叶った", note: "直訳は「私の祈りが答えられた」。待ち望んでいたことが起きたときに使える。", exEn: "I'm so glad that they're back. My prayers were answered.", exJa: "また戻ってきてくれて本当に嬉しい。願いが叶ったよ。" },
+  { id: 27, lesson: 2, time: "00:10:02", sec: 602, endSec: 643, phrase: "how long I've lived ~", pos: "名詞節", meaning: "どれくらい長く〜に住んでいるか", note: "how long が「期間」を表し、現在完了の I've lived と組み合わせている。", exEn: "I actually can't believe how long I've lived in New York.", exJa: "ニューヨークにこんなに長く住んでるなんて、実際まだ信じられない。" },
+  { id: 28, lesson: 2, time: "00:10:02", sec: 602, endSec: 643, phrase: "it's been almost three years", pos: "表現", meaning: "もうすぐ3年になる", note: "It has been ~ で「〜の期間が経った／〜になる」を自然に言える超定番表現。", exEn: "I think it's been almost three years now.", exJa: "もう3年近くになると思う。" },
+  { id: 29, lesson: 2, time: "00:10:44", sec: 644, endSec: 675, phrase: "would always come", pos: "表現", meaning: "いつも〜していた（来ていた）", note: "would が過去の習慣を表している。", exEn: "Because I was thinking when I used to live here, I would always come to this spot.", exJa: "というのも、ここに住んでいた頃は、いつもこの場所に来てたなって思って。" },
+  { id: 30, lesson: 2, time: "00:10:44", sec: 644, endSec: 675, phrase: "this spot", pos: "名詞", meaning: "この場所・このお気に入りの場所", note: "spot はカジュアルに「場所・スポット」を表す。", exEn: "I would always come to this spot.", exJa: "いつもこの場所に来てたなって思って。" },
+  { id: 31, lesson: 2, time: "00:11:16", sec: 676, endSec: 738, phrase: "make me reminisce", pos: "表現", meaning: "私に思い出を振り返らせる", note: "make + 人 + 動詞の原形 で「人に〜させる」。", exEn: "And it just made me reminisce about moving and, like, living in New York and how far I've come.", exJa: "それで、ニューヨークに引っ越してきたことや、ここで暮らしてきたこと、そして自分がどれだけ成長してきたかを思い出させてくれた。" },
+  { id: 32, lesson: 2, time: "00:11:16", sec: 676, endSec: 738, phrase: "how far I've come", pos: "表現", meaning: "自分がどれだけ成長してきたか・ここまで来たか", note: "物理的な距離ではなく、人生やキャリアなどの進歩を表す。", exEn: "And it just made me reminisce about moving and, like, living in New York and how far I've come.", exJa: "それで、ニューヨークに引っ越してきたことや、ここで暮らしてきたこと、そして自分がどれだけ成長してきたかを思い出させてくれた。" },
+  { id: 33, lesson: 2, time: "00:12:19", sec: 739, endSec: 788, phrase: "exaggerate", pos: "動詞", meaning: "大げさに言う・誇張する", note: "I'm not exaggerating. は「大げさに言ってるんじゃないよ」と強調するときの定番表現。", exEn: "I moved here. I literally had no friends, guys. I'm not even, like, exaggerating. I knew zero people.", exJa: "私はここに引っ越してきたんだけど、本当に友達が一人もいなかった。大げさに言ってるんじゃないよ。本当に誰一人知らなかった。" },
+  { id: 34, lesson: 2, time: "00:13:09", sec: 789, endSec: 834, phrase: "feel like ~", pos: "表現", meaning: "〜な気がする・〜と感じる", note: "自分の感覚や印象を柔らかく伝える。", exEn: "And now I feel like I have such a community of friends. I feel so happy here now.", exJa: "それが今では、こんなにたくさんの友達に囲まれている気がする。今はここで本当に幸せ。" },
+  { id: 35, lesson: 2, time: "00:13:09", sec: 789, endSec: 834, phrase: "such a community of friends", pos: "表現", meaning: "こんなに素敵な友達のコミュニティ", note: "such a + 名詞 で「こんなに〜な」と感情を込めて強調できる。", exEn: "And now I feel like I have such a community of friends.", exJa: "それが今では、こんなにたくさんの友達に囲まれている気がする。" },
+  { id: 36, lesson: 2, time: "00:13:55", sec: 835, endSec: 889, phrase: "not me ~ing", pos: "ネット・会話表現", meaning: "私が〜してるんだけど（笑）", note: "自分の行動をちょっと面白く、ツッコミっぽく表現するSNS・口語表現。", exEn: "Okay, not me getting sentimental on a Friday morning at 11 a.m.", exJa: "金曜の朝11時から感傷的になってる私って何なの。" },
+  { id: 37, lesson: 2, time: "00:13:55", sec: 835, endSec: 889, phrase: "people watch / people watching", pos: "動詞・名詞", meaning: "人間観察をする / 人間観察", note: "街やカフェなどで、行き交う人の様子を眺めて楽しむこと。", exEn: "I'm just gonna hang out, people watch.", exJa: "まあ、のんびりして、人間観察でもしようかな。" },
+  { id: 38, lesson: 2, time: "00:14:50", sec: 890, endSec: 927, phrase: "ever", pos: "副詞", meaning: "これまでで・今までで", note: "my favorite ~ ever で「今までで一番好きな〜」という強いお気に入りを表せる。", exEn: "That's my favorite thing to do ever, if you know me.", exJa: "私のことを知ってるなら分かると思うけど、それが私の一番好きなことなんです。" },
+  { id: 39, lesson: 2, time: "00:14:50", sec: 890, endSec: 927, phrase: "if you know me", pos: "表現", meaning: "私のことを知ってるなら", note: "「私を知っている人なら分かるよね」という親しみのある言い方。", exEn: "That's my favorite thing to do ever, if you know me.", exJa: "私のことを知ってるなら分かると思うけど、それが私の一番好きなことなんです。" },
+  { id: 40, lesson: 2, time: "00:15:28", sec: 928, endSec: 982, phrase: "Type A / Type A personality", pos: "形容詞的表現・名詞", meaning: "几帳面で計画的なタイプ（の性格）", note: "計画を立てたり、きっちり物事を進めたりする人を指すカジュアルな性格表現。", exEn: "I'm so type A, but I'm trying to just go with the flow.", exJa: "私はかなり計画を立てるタイプだけど、今は流れに身を任せようとしてる。" },
+  { id: 41, lesson: 2, time: "00:15:28", sec: 928, endSec: 982, phrase: "go with the flow", pos: "イディオム", meaning: "流れに身を任せる・成り行きに任せる", note: "あらかじめ予定を決めすぎず、その場の状況に合わせて行動すること。", exEn: "I'm so type A, but I'm trying to just go with the flow.", exJa: "私はかなり計画を立てるタイプだけど、今は流れに身を任せようとしてる。" },
+  { id: 42, lesson: 2, time: "00:16:23", sec: 983, endSec: 1066, phrase: "stumble upon ~", pos: "句動詞", meaning: "〜を偶然見つける", note: "探していたわけではないものを、たまたま発見するニュアンス。", exEn: "So I did stumble upon this. A rack full of city bikes.", exJa: "それで、これを偶然見つけました。シティバイクがいっぱい並んでるラック。" },
+  { id: 43, lesson: 2, time: "00:16:23", sec: 983, endSec: 1066, phrase: "Something about me", pos: "会話表現", meaning: "私ってどういうわけか〜", note: "自分の特徴や妙な習慣を紹介するときのカジュアルな言い方。", exEn: "Something about me, I'm always gonna pick the electric bike.", exJa: "私って、どういうわけかいつも電動自転車を選んじゃうんだよね。" },
+  { id: 44, lesson: 3, time: "00:17:55", sec: 1075, endSec: 1120, phrase: "Would you guys believe me if I told you ~?", pos: "表現", meaning: "もし私が〜って言ったら、信じてくれる？", note: "これから話す内容が「意外でしょ？」というニュアンスを出せる定番の言い方。", exEn: "Would you guys believe me if I told you I was about to go golf right now? Because I am.", exJa: "もし今からゴルフに行くって言ったら、みんな信じてくれる？だって、本当に行くんだもん。" },
+  { id: 45, lesson: 3, time: "00:17:55", sec: 1075, endSec: 1120, phrase: "Because I am.", pos: "表現", meaning: "だって、本当にそうなんだもん", note: "直前の内容を強調して I am (about to go golf) の内容を受けている。", exEn: "Would you guys believe me if I told you I was about to go golf right now? Because I am.", exJa: "もし今からゴルフに行くって言ったら、みんな信じてくれる？だって、本当に行くんだもん。" },
+  { id: 46, lesson: 3, time: "00:18:41", sec: 1121, endSec: 1160, phrase: "the last thing I ever expected myself to ~", pos: "表現", meaning: "自分が〜するなんて絶対に思っていなかったこと", note: "the last thing は「最も意外なもの・まさか〜するとは思わなかった」という意味で使われる。", exEn: "Golf is the last thing I ever expected myself to enjoy.", exJa: "ゴルフなんて、自分が楽しむようになるとは一番思ってもいなかったことだよ。" },
+  { id: 47, lesson: 3, time: "00:18:41", sec: 1121, endSec: 1160, phrase: "expect myself to ~", pos: "表現", meaning: "自分が〜すると思う・予想する", note: "expect + 人 + to do の形。", exEn: "Golf is the last thing I ever expected myself to enjoy.", exJa: "ゴルフなんて、自分が楽しむようになるとは一番思ってもいなかったことだよ。" },
+  { id: 48, lesson: 3, time: "00:19:21", sec: 1161, endSec: 1205, phrase: "love to golf", pos: "表現", meaning: "ゴルフをするのが大好き", note: "golf を動詞として使える。", exEn: "But my boyfriend loves to golf and since we started dating a couple years ago,", exJa: "でも、私の彼氏はゴルフが大好きで、数年前に付き合い始めてから、" },
+  { id: 49, lesson: 3, time: "00:19:21", sec: 1161, endSec: 1205, phrase: "a couple years ago", pos: "表現", meaning: "数年前", note: "会話では of を省いた a couple years ago もよく使われる。", exEn: "But my boyfriend loves to golf and since we started dating a couple years ago,", exJa: "でも、私の彼氏はゴルフが大好きで、数年前に付き合い始めてから、" },
+  { id: 50, lesson: 3, time: "00:20:06", sec: 1206, endSec: 1259, phrase: "At first", pos: "表現", meaning: "最初は・初めのうちは", note: "その後の変化とセットでよく使われる。", exEn: "I have also learned to enjoy it with him. At first I did hate it, but the more I did it,", exJa: "私も彼と一緒にゴルフを楽しめるようになった。最初は本当に嫌いだったんだけど、やればやるほど、" },
+  { id: 51, lesson: 3, time: "00:20:06", sec: 1206, endSec: 1259, phrase: "the more A, the more B", pos: "構文", meaning: "〜すればするほど、ますます〜", note: "また come to ~ は「次第に〜するようになる」。", exEn: "the more I did it, the more I understood the art of golf, how hard it is, and I've kind of come to appreciate it.", exJa: "やればやるほど、ゴルフというものの奥深さや、どれだけ難しいものなのかが分かってきて、だんだんその良さが分かるようになった。" },
+  { id: 52, lesson: 3, time: "00:21:00", sec: 1260, endSec: 1318, phrase: "the art of golf", pos: "表現", meaning: "ゴルフの奥深さ・技術", note: "ここでの art は「芸術」だけではなく、「技術や奥深さ」という意味。", exEn: "the more I understood the art of golf, how hard it is, and I've kind of come to appreciate it.", exJa: "やればやるほど、ゴルフというものの奥深さや、どれだけ難しいものなのかが分かってきて、だんだんその良さが分かるようになった。" },
+  { id: 53, lesson: 3, time: "00:21:59", sec: 1319, endSec: 1365, phrase: "driving range", pos: "名詞", meaning: "ゴルフ練習場・打ちっぱなし", note: "ボールを打つ練習をする場所を指す定番表現。", exEn: "I was biking right past the Chelsea Pier, which is where I come to the driving range sometimes.", exJa: "チェルシー・ピアのすぐそばを自転車で通ってたんだけど、ここは私がたまに打ちっぱなしに来る場所なの。" },
+  { id: 54, lesson: 3, time: "00:21:59", sec: 1319, endSec: 1365, phrase: "which is where ~", pos: "表現", meaning: "そこが〜する場所なんだけど", note: "場所に関する説明を後から付け加える表現。", exEn: "I was biking right past the Chelsea Pier, which is where I come to the driving range sometimes.", exJa: "チェルシー・ピアのすぐそばを自転車で通ってたんだけど、ここは私がたまに打ちっぱなしに来る場所なの。" },
+  { id: 55, lesson: 3, time: "00:22:46", sec: 1366, endSec: 1408, phrase: "Fair warning / Forewarning", pos: "表現", meaning: "一応言っておくけど・先に注意しておくと", note: "少しネガティブなことを伝える前のカジュアルな前置き。", exEn: "Fair warning, I'm not good, okay? I feel like I just hyped myself up.", exJa: "一応言っておくけど、私ゴルフ上手くないからね？なんか自分で自分のことを盛り上げすぎちゃった気がする。" },
+  { id: 56, lesson: 3, time: "00:22:46", sec: 1366, endSec: 1408, phrase: "hype myself up", pos: "表現", meaning: "自分を盛り上げる・期待を高める", note: "hype someone up で「人を盛り上げる」。", exEn: "Fair warning, I'm not good, okay? I feel like I just hyped myself up.", exJa: "一応言っておくけど、私ゴルフ上手くないからね？なんか自分で自分のことを盛り上げすぎちゃった気がする。" },
+  { id: 57, lesson: 3, time: "00:23:29", sec: 1409, endSec: 1451, phrase: "pretty bad", pos: "表現", meaning: "かなり下手・結構ひどい", note: "pretty は「かなり」という程度を表す。", exEn: "I'm actually pretty bad, but I do think it's fun, and I always come with someone though.", exJa: "実際、私はかなり下手なんだけど、楽しいとは思うよ。でも、いつも誰かと一緒に来るんだよね。" },
+  { id: 58, lesson: 3, time: "00:24:12", sec: 1452, endSec: 1497, phrase: "I've never come alone", pos: "表現", meaning: "一人で来たことがない", note: "have never + 過去分詞 で「今まで一度も〜したことがない」。", exEn: "I've never come alone, so do people do this alone? I feel like yes.", exJa: "一人で来たことは一度もないんだけど、こういうのって一人でやる人もいるの？いる気はするけど。" },
+  { id: 59, lesson: 3, time: "00:24:58", sec: 1498, endSec: 1532, phrase: "lefty / righty", pos: "名詞", meaning: "左利きの人 / 右利きの人", note: "for lefty で「左利き用で」。", exEn: "Um, can I do the driving range for lefty?", exJa: "えっと、左利き用で打ちっぱなしを利用できますか？" },
+  { id: 60, lesson: 3, time: "00:25:33", sec: 1533, endSec: 1633, phrase: "a bunch of ~", pos: "表現", meaning: "たくさんの〜・〜ばっかり", note: "middle-aged men で「中年男性」。", exEn: "Alright, I think I'm the only girl vlogging here right now. It's just a bunch of middle-aged men.", exJa: "よし、今ここでVlogを撮ってる女の子は私だけだと思う。中年男性ばっかりだよ。" },
+  { id: 61, lesson: 3, time: "00:27:14", sec: 1634, endSec: 1675, phrase: "a spare", pos: "名詞", meaning: "予備のもの", note: "名詞として「予備のもの」という意味でも使える。", exEn: "They never have them anywhere, but this place luckily has a spare for me.", exJa: "どこに行っても全然置いてないんだけど、ここには運良く私用の予備があった。" },
+  { id: 62, lesson: 3, time: "00:27:56", sec: 1676, endSec: 1707, phrase: "in everything else", pos: "表現", meaning: "それ以外のことでは全部", note: "ゴルフ以外の動作をまとめて指している。", exEn: "Don't know why I'm a lefty. I'm righty in everything else.", exJa: "なんで左利きなんだろう。ほかは全部右利きなのに。" },
+  { id: 63, lesson: 3, time: "00:28:28", sec: 1708, endSec: 1748, phrase: "yap / yapping", pos: "動詞", meaning: "ペラペラしゃべる", note: "be nervous about ~ing は「〜することに緊張する」。", exEn: "I'm yapping, because I'm nervous about showing you guys my swing.", exJa: "私、ずっとしゃべってるね。みんなに自分のスイングを見せるのが緊張するから。" },
+  { id: 64, lesson: 3, time: "00:29:09", sec: 1749, endSec: 1771, phrase: "get closer on a deeper level", pos: "表現", meaning: "もっと深いレベルで距離が縮まる（親しくなる）", note: "人間関係が近くなる場合にも使える。", exEn: "We're getting closer on a deeper level.", exJa: "私たち、もっと深いレベルで距離が縮まってきてるね。" },
+  { id: 65, lesson: 3, time: "00:29:32", sec: 1772, endSec: 1799, phrase: "take off", pos: "句動詞", meaning: "脱ぐ・取り外す", note: "take off + 衣類 で「〜を脱ぐ」。", exEn: "Guys, I'm sweating. I took off my coat.", exJa: "みんな、汗かいてる。コート脱いじゃった。" },
+  { id: 66, lesson: 3, time: "00:30:00", sec: 1800, endSec: 1921, phrase: "let go of ~", pos: "熟語", meaning: "〜を手放す", note: "手で持っているものを離すときに使う。into the distance は「遠くの方へ」。", exEn: "My biggest fear in golf is somehow letting go of my golf club when I'm swinging it and flinging it off into the distance.", exJa: "ゴルフで一番怖いのは、スイングしているときに何かの拍子にクラブを手放して、遠くに飛ばしちゃうこと。" },
+  { id: 67, lesson: 3, time: "00:32:02", sec: 1922, endSec: 1975, phrase: "worry that ~", pos: "表現", meaning: "〜ではないかと心配する", note: "a unique fear は「自分特有の珍しい恐怖」。", exEn: "I don't know if this is like a unique fear, but I just worry that I'm gonna like, let go.", exJa: "これって私だけの変わった恐怖なのか分からないけど、ただ、手を離しちゃいそうで心配なの。" },
+  { id: 68, lesson: 3, time: "00:32:56", sec: 1976, endSec: 2075, phrase: "spontaneous", pos: "形容詞", meaning: "思いつきの・行き当たりばったりの", note: "その場の気分や思いつきで行動すること（ポジティブな意味でも使える）。", exEn: "I am done now. This was so fun and spontaneous. I maybe should really be more spontaneous.", exJa: "もう終わり。すごく楽しかったし、思いつきでやってみてよかった。私、もっとこういうふうに行き当たりばったりで行動したほうがいいのかも。" },
+  { id: 69, lesson: 4, time: "00:34:48", sec: 2088, endSec: 2130, phrase: "fun and games are over", pos: "表現", meaning: "楽しい時間は終わり・遊びは終わり", note: "楽しい時間が終わり、現実に戻るときにも使える表現。", exEn: "Okay guys, fun and games are over, I'm so hungry. I need to find food right now.", exJa: "みんな、楽しい時間は終わり。めちゃくちゃお腹空いた。今すぐ何か食べるものを探さなきゃ。" },
+  { id: 70, lesson: 4, time: "00:35:31", sec: 2131, endSec: 2187, phrase: "waltz around / walk around trying to ~", pos: "動詞・表現", meaning: "ワルツを踊るように歩き回る / 〜しようとして歩き回る", note: "思わず言った waltzing around を自分でツッコみ、walking around に言い直している。", exEn: "I'm waltzing around, trying, waltzing? Why did I say that? I'm walking around trying to find food.", exJa: "なんかぶらぶら歩き回って、食べ物を探してる……ワルツ？なんでそんなこと言ったんだろ。普通に歩き回って食べ物を探してる。" },
+  { id: 71, lesson: 4, time: "00:36:28", sec: 2188, endSec: 2217, phrase: "work up an appetite", pos: "熟語", meaning: "お腹を空かせる・食欲が出る", note: "運動などをした結果、食欲が出てきたときによく使う定番表現。", exEn: "Okay, all that golf worked up an appetite, I guess.", exJa: "まあ、あれだけゴルフしたらお腹も空くよね。" },
+  { id: 72, lesson: 4, time: "00:36:58", sec: 2218, endSec: 2282, phrase: "fire someone from ~", pos: "熟語", meaning: "人を〜からクビにする", note: "ここでは「YouTuber失格だわ（笑）」という自虐表現。", exEn: "Someone seriously fire me from this job of doing YouTube because I bought my food and I didn't even show it before I ate it.", exJa: "誰か本気で私をYouTubeの仕事からクビにして。食べ物買ったのに、食べる前に見せることすらしなかったから。" },
+  { id: 73, lesson: 4, time: "00:38:03", sec: 2283, endSec: 2362, phrase: "sesame seed bagel with ~", pos: "表現", meaning: "〜入りの（〜を合わせた）ゴマのベーグル", note: "with ~ で具材やトッピングを説明する。", exEn: "I got my favorite bagel, which is sesame seed bagel from Leon's with... Veggie cream cheese.", exJa: "お気に入りのベーグルを買った。Leon'sのセサミシードベーグルで、そこに……ベジタブル・クリームチーズ。" },
+  { id: 74, lesson: 4, time: "00:39:23", sec: 2363, endSec: 2399, phrase: "didn't take much", pos: "表現", meaning: "それほど多くは必要なかった", note: "「お腹が空きすぎていたから、目に入ったものなら何でもよかった」というニュアンス。", exEn: "This was the first thing I saw. It really didn't take much for me.", exJa: "これが最初に目に入ったものだった。私には本当にこれだけで十分だった。" },
+  { id: 75, lesson: 4, time: "00:40:00", sec: 2400, endSec: 2425, phrase: "sound appealing", pos: "表現", meaning: "魅力的に聞こえる・美味しそうに感じる", note: "話を聞いただけで美味しそうに思えるという自然な表現。", exEn: "Anything would have sounded appealing. I was so hungry.", exJa: "何を聞いても美味しそうに思えたと思う。めちゃくちゃお腹が空いてたから。" },
+  { id: 76, lesson: 4, time: "00:40:26", sec: 2426, endSec: 2471, phrase: "to be honest / be number one for me", pos: "表現", meaning: "正直に言うと / 私の中では一番（大好物）", note: "自分の本音を伝える to be honest と、お気に入りを表す number one for me。", exEn: "I love Leon's, but to be honest, pop-up bagels are always gonna be number one for me.", exJa: "Leon'sは大好きなんだけど、正直、私の中ではポップアップ・ベーグルがいつだって一番。" },
+  { id: 77, lesson: 4, time: "00:41:12", sec: 2472, endSec: 2512, phrase: "Nothing can come between A and B", pos: "表現", meaning: "AとBを引き離すものは何もない", note: "except for the fact that ~ は「〜という事実を除いて」。", exEn: "Nothing can come between me and pop-up bagels, except for the fact that they were closed.", exJa: "私とポップアップ・ベーグルの間に入るものなんて何もない。ただ、あのお店が閉まってたってことを除けばね。" },
+  { id: 78, lesson: 4, time: "00:41:53", sec: 2513, endSec: 2559, phrase: "beautiful out / kind of just wanted to ~", pos: "表現", meaning: "外の天気がすごくきれい / なんとなく〜したくなった", note: "out は「外では」という感覚。", exEn: "It is so beautiful out and I kind of just wanted to sit.", exJa: "外がすごくきれいで、なんとなく座っていたくなった。" },
+  { id: 79, lesson: 4, time: "00:42:40", sec: 2560, endSec: 2609, phrase: "everything that's going on", pos: "表現", meaning: "そこで起きているすべてのこと", note: "what's going on は「何が起きているのか」。", exEn: "I love this park. I love people watching. I love seeing everything that's going on.", exJa: "この公園大好き。人間観察も大好き。ここで起きていることを全部眺めるのも好き。" },
+  { id: 80, lesson: 4, time: "00:43:30", sec: 2610, endSec: 2654, phrase: "determine my mood / take it in", pos: "表現・熟語", meaning: "私の気分を左右する / それをじっくり味わう", note: "take it in は「目の前の景色や雰囲気をじっくり味わう」。", exEn: "Unfortunately, the weather does determine my mood, so I'm taking it in.", exJa: "残念ながら、天気って私の気分を本当に左右するんだよね。だから今、この晴れた時間をじっくり味わってる。" },
+  { id: 81, lesson: 4, time: "00:44:15", sec: 2655, endSec: 2692, phrase: "the past few days", pos: "名詞句", meaning: "ここ数日・過去数日間", note: "現在完了形とセットで、今につながる期間を表す定番表現。", exEn: "It hasn't been sunny the past few days. I'm enjoying it.", exJa: "この数日ずっと晴れてなかったからね。だから今、この晴れを楽しんでる。" },
+  { id: 82, lesson: 5, time: "00:45:04", sec: 2704, endSec: 2759, phrase: "as much as I do", pos: "表現", meaning: "私と同じくらい", note: "like these as much as I do で「私と同じくらいこれらを好き・楽しんでくれる」。", exEn: "I wanted to do my little advice session. These I think are so fun. I hope you guys like these as much as I do.", exJa: "ちょっとしたアドバイスコーナーをやりたかったんだ。こういうのってすごく楽しいと思う。私と同じくらいみんなにも楽しんでもらえたら嬉しいな。" },
+  { id: 83, lesson: 5, time: "00:46:00", sec: 2760, endSec: 2795, phrase: "get in one's own way / get in the way", pos: "熟語", meaning: "自分で自分の邪魔をする / 妨げになる", note: "考えすぎたり不安になったりして、自分の行動を自分で邪魔してしまうときに使う。", exEn: "I think a lot of people get in their own way when they're trying to start social media.", exJa: "SNSを始めようとしているときに、自分自身で自分の邪魔をしてしまう人って多いと思う。" },
+  { id: 84, lesson: 5, time: "00:46:36", sec: 2796, endSec: 2843, phrase: "all it takes is ~", pos: "表現", meaning: "必要なのは〜だけ", note: "「〜さえあれば十分」というシンプルな条件を伝える便利な表現。", exEn: "Really, all it takes is a phone, a camera. It doesn't need to be the best camera in the world.", exJa: "本当に必要なのは、スマホかカメラ、それだけ。世界最高のカメラである必要なんてない。" },
+  { id: 85, lesson: 5, time: "00:47:24", sec: 2844, endSec: 2884, phrase: "the best advice I have", pos: "表現", meaning: "私が伝えられる最高のアドバイス", note: "just start は「完璧な準備を待たず、とにかく始める」。", exEn: "And I think the best advice I have is to just start.", exJa: "そして、私ができる一番のアドバイスは、とにかく始めることだと思う。" },
+  { id: 86, lesson: 5, time: "00:48:05", sec: 2885, endSec: 2930, phrase: "come off as authentic", pos: "熟語", meaning: "自然体で本物らしい印象を与える", note: "come off as ~ は「〜という印象を与える、〜のように見える」。", exEn: "If you try to be too perfect about it, it just, first of all, it won't come off as authentic.", exJa: "それを完璧にやろうとしすぎると、まず第一に、自然な感じには見えなくなっちゃう。" },
+  { id: 87, lesson: 5, time: "00:48:51", sec: 2931, endSec: 3027, phrase: "not ~ until ...", pos: "構文", meaning: "…するまで〜しない（…して初めて〜する）", note: "don't really learn until you do something で「実際にやるまでは本当には学べない」。", exEn: "And secondly, you don't really learn until you do something.", exJa: "そして第二に、実際に何かをやってみないと、本当の意味では学べない。" },
+  { id: 88, lesson: 5, time: "00:50:28", sec: 3028, endSec: 3078, phrase: "easier said than done", pos: "熟語", meaning: "言うは易く行うは難し", note: "「言うのは簡単だけど、実際にやるのは難しい」という超定番表現。", exEn: "And I would also say, which is so much easier said than done, don't let what people think of you get in the way.", exJa: "それと、言うのは簡単だけど実際にはすごく難しいことなんだけど、人にどう思われるかを理由に邪魔されないでほしい。" },
+  { id: 89, lesson: 5, time: "00:51:19", sec: 3079, endSec: 3153, phrase: "struggle with ~ / make fun of ~", pos: "熟語", meaning: "〜に悩む、苦労する / 〜をからかう", note: "どちらも日常会話で非常によく使う頻出熟語。", exEn: "I think for me, something I struggled with when I first started, when I was like 13, was people in school making fun of my videos or seeing them.", exJa: "私の場合、始めたばかりの13歳くらいの頃に悩んでいたのは、学校の人たちに動画を笑われたり、見られたりすることだった。" },
+  { id: 90, lesson: 5, time: "00:52:34", sec: 3154, endSec: 3208, phrase: "let A stop B from ~ing", pos: "表現", meaning: "AのせいでBが〜するのをやめてしまう", note: "fear of what people think of you は「人にどう思われるかという恐怖」。", exEn: "But if you let your fear of what people think of you stop you from making videos, to me, those people win.", exJa: "でも、人にどう思われるかという恐怖によって動画を作るのをやめてしまったら、私からすれば、その人たちの勝ちになっちゃう。" },
+  { id: 91, lesson: 5, time: "00:53:29", sec: 3209, endSec: 3259, phrase: "deserve to ~", pos: "熟語", meaning: "〜するに値する、〜する権利がある", note: "相手を励ますときにも使える。", exEn: "And that's like not fair for you. You deserve, if you want to make videos, to make them and post them.", exJa: "それって、あなたにとってあまりにも不公平だと思う。動画を作りたいなら、作って投稿する権利があなたにはあるんだから。" },
+  { id: 92, lesson: 5, time: "00:54:20", sec: 3260, endSec: 3287, phrase: "start somewhere / start at zero", pos: "表現", meaning: "どこかから始める / ゼロから始める", note: "「誰だって最初は初心者」という励ましに使える表現。", exEn: "Everyone starts somewhere, everyone starts at zero.", exJa: "誰だってどこかから始める。誰だってゼロから始まる。" },
+  { id: 93, lesson: 5, time: "00:54:48", sec: 3288, endSec: 3334, phrase: "So cliche, but so true.", pos: "表現", meaning: "すごくありきたりだけど、本当にその通り", note: "cliche は「ありきたりな表現、決まり文句」。", exEn: "And just be yourself. So cliche, but so true.", exJa: "そして、とにかく自分らしくいること。すごくありきたりだけど、本当にその通り。" },
+  { id: 94, lesson: 5, time: "00:55:35", sec: 3335, endSec: 3370, phrase: "read through ~", pos: "句動詞", meaning: "〜を読み通す・表面的なものを見抜く", note: "「作っている自分・不自然さを人はすぐ見抜く」という意味。", exEn: "And I think people can just so read through that.", exJa: "そういうのって、人にはすぐ見抜かれちゃうと思う。" }
+];
+
+const VID = 'ADXmnbZMeO8';
+const KEY = 'idioms_' + VID;
+const ytUrl = s => `https://www.youtube.com/watch?v=${VID}&t=${s}s`;
+function fmt(s) { return `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`; }
+
+let learned = new Set();
+try { learned = new Set(JSON.parse(localStorage.getItem(KEY) || '[]')); } catch (e) {}
+let current = null, masking = false, onlyUnlearned = false;
+
+const $ = id => document.getElementById(id);
+const grid = $('cardGrid');
+
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify([...learned])); } catch (e) {}
+  $('statsText').textContent = `習得 ${learned.size} / ${rawIdioms.length}`;
+  $('fill').style.width = (learned.size / rawIdioms.length * 100) + '%';
+}
+
+function select(item) {
+  current = item;
+  $('npStatus').textContent = `L${item.lesson} · No.${item.id}`;
+  $('npTime').textContent = `${fmt(item.sec)}〜${fmt(item.endSec)}`;
+  $('npPhrase').textContent = `${item.phrase}（${item.meaning}）`;
+  $('npSub').textContent = `${item.exEn} / ${item.exJa}`;
+  const a = $('npLink');
+  a.href = ytUrl(item.sec);
+  a.textContent = `▶ YouTubeで ${fmt(item.sec)} から見る`;
+  a.setAttribute('aria-disabled', 'false');
+  render();
+}
+
+function render() {
+  const q = $('search').value.trim().toLowerCase();
+  const l = $('lessonFilter').value;
+  grid.innerHTML = '';
+  let shown = 0;
+  rawIdioms.forEach(item => {
+    const done = learned.has(item.id);
+    if (l !== 'all' && String(item.lesson) !== l) return;
+    if (onlyUnlearned && done) return;
+    if (q && ![item.phrase, item.meaning, item.note, item.exEn, item.exJa].some(t => t.toLowerCase().includes(q))) return;
+    shown++;
+    const on = current && current.id === item.id;
+    const card = document.createElement('article');
+    card.className = `card${done ? ' done' : ''}${on ? ' on' : ''}`;
+    card.innerHTML = `
+      <div class="head">
+        <span class="bullet l${item.lesson}" style="background:var(--l${item.lesson})" title="Lesson ${item.lesson}">${item.lesson}</span>
+        <span class="no">No.${item.id}</span>
+        <span class="pos">${item.pos}</span>
+        <span class="time">${fmt(item.sec)}〜${fmt(item.endSec)}</span>
+      </div>
+      <div class="phrase">${item.phrase}</div>
+      <div class="ans${masking ? ' masked' : ''}" title="${masking ? 'タップで表示' : ''}">
+        <div class="meaning">${item.meaning}</div>
+        <div class="note">${item.note}</div>
+        <div class="ex"><div class="ex-en">${item.exEn}</div><div class="ex-ja">${item.exJa}</div></div>
+      </div>
+      <div class="foot">
+        <label><input type="checkbox" id="learned-${item.id}" ${done ? 'checked' : ''}> 覚えた</label>
+        <button class="cbtn" type="button">${on ? '選択中' : 'この場面'}</button>
+        <a href="${ytUrl(item.sec)}" target="_blank" rel="noopener">YouTube ↗</a>
+      </div>`;
+    card.querySelector('.cbtn').addEventListener('click', () => select(item));
+    card.querySelector('input').addEventListener('change', e => {
+      e.target.checked ? learned.add(item.id) : learned.delete(item.id);
+      save(); render();
+    });
+    card.querySelector('.ans').addEventListener('click', e => { if (masking) e.currentTarget.classList.toggle('masked'); });
+    grid.appendChild(card);
+  });
+  if (!shown) grid.innerHTML = '<p class="empty">条件に合う熟語はありません。検索語やフィルターを変えてください。</p>';
+  save();
+}
+
+$('search').addEventListener('input', render);
+$('lessonFilter').addEventListener('change', render);
+$('maskBtn').addEventListener('click', e => {
+  masking = !masking;
+  document.body.classList.toggle('masking', masking);
+  e.currentTarget.setAttribute('aria-pressed', masking);
+  render();
+});
+$('unlearnedBtn').addEventListener('click', e => {
+  onlyUnlearned = !onlyUnlearned;
+  e.currentTarget.setAttribute('aria-pressed', onlyUnlearned);
+  render();
+});
+render();
+</script>
+
+</body>
+</html>
