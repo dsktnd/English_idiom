@@ -11,3 +11,7 @@ NYの1日Vlog（[YouTube](https://www.youtube.com/watch?v=ADXmnbZMeO8)）から�
 - 英語・日本語での検索、レッスンごとの絞り込み
 - 「意味を隠す」で暗記チェック（カードをタップすると表示）
 - 「覚えた」にチェックした熟語は、ブラウザに保存されます
+
+## ほかの熟語帳
+
+- [朝5時起き1週間 熟語帳](https://dsktnd.github.io/English_idiom/5am/)（[YouTube](https://www.youtube.com/watch?v=Myp2On95hJM)・50表現・5レッスン）
