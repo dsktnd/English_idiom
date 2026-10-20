@@ -14,4 +14,4 @@ NYの1日Vlog（[YouTube](https://www.youtube.com/watch?v=ADXmnbZMeO8)）から�
 
 ## ほかの熟語帳
 
-- [朝5時起き1週間 熟語帳](https://dsktnd.github.io/English_idiom/5am/)（[YouTube](https://www.youtube.com/watch?v=Myp2On95hJM)・50表現・5レッスン）
+- [朝5時起き1週間 熟語帳](https://dsktnd.github.io/English_idiom/5am/)（[YouTube](https://www.youtube.com/watch?v=Myp2On95hJM)・50表現・5レッスン。各熟語に入れ替えて使える「型」と応用例文つき）

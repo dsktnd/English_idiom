@@ -107,6 +107,12 @@ body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--b
 .ex { background: var(--soft); border-radius: 6px; padding: 8px 10px; font-size: 0.85rem; }
 .ex-en { font-weight: 500; }
 .ex-ja { color: var(--muted); }
+.apply { border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-size: 0.85rem; display: grid; gap: 6px; }
+.apply-label { font-size: 0.72rem; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; }
+.apply-pattern { font-family: var(--mono); font-weight: 500; color: var(--accent); }
+.apply-tip { color: var(--ink); }
+.apply ul { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+.apply li .ex-ja { display: block; }
 .foot { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 4px; flex-wrap: wrap; }
 .foot label { display: flex; gap: 6px; align-items: center; font-size: 0.85rem; color: var(--muted); cursor: pointer; }
 .cbtn { font: inherit; font-size: 0.8rem; font-weight: 700; border: 1px solid var(--line); background: transparent; color: var(--ink); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
@@ -216,6 +222,60 @@ const rawIdioms = [
   { id: 50, lesson: 5, time: "00:17:40", sec: 1060, endSec: 1078, phrase: "follow through on ~", pos: "句動詞", meaning: "（決めたことや約束を）最後までやり通す・実行に移す", note: "自分で「朝5時に起きてジムに行く」と決めたことを、口先だけでなく最後までやり抜くこと。", exEn: "It's just not the same as being diligent and following through on like what I said that I was going to do.", exJa: "やっぱり、自分に誠実になって「やる」と言ったことを最後までやり通すのとは全然違うんだよね。" },
 ];
 
+// 応用: pattern = 入れ替えられる「型」、tip = 使い方のコツ、ex = 単語を入れ替えた例文
+const usage = {
+  1: { pattern: "get ready for + 名詞 / get ready to + 動詞", tip: "for のあとを入れ替えれば「〜の準備をする」が何にでも使えます。動作を続けたいときは to + 動詞の原形。", ex: [["I need to get ready for work.", "仕事に行く準備をしなきゃ。"], ["Get ready to leave in five minutes!", "5分後に出るから準備して！"]] },
+  2: { pattern: "pitch black / pitch dark", tip: "pitch は「タール（真っ黒なもの）」。名詞＋色で「〜のように真っ〇〇」と強調する型で、snow white（真っ白）、jet black（真っ黒）、bright red（真っ赤）なども同じ仲間です。", ex: [["The room was pitch dark when the power went out.", "停電したとき、部屋は真っ暗だった。"], ["Her dress was snow white.", "彼女のドレスは真っ白だった。"]] },
+  3: { pattern: "not + 動詞 ~ anytime soon", tip: "否定文・疑問文で使い、「当分〜しそうにない」という意味になります。肯定文ではほぼ使いません。", ex: [["I'm not moving out anytime soon.", "当分引っ越すつもりはないよ。"], ["Is the rain going to stop anytime soon?", "雨、すぐに止みそう？"]] },
+  4: { pattern: "~ light(s) up / do ~ at once", tip: "light up は物が光るだけでなく「顔・目がパッと輝く（嬉しそうになる）」にも使えます。at once は「同時に」のほか「すぐに」の意味もあります。", ex: [["His face lit up when he saw the cake.", "ケーキを見た瞬間、彼の顔がパッと明るくなった。"], ["Don't all talk at once!", "みんな一斉にしゃべらないで！"]] },
+  5: { pattern: "an internal conflict about / between ~", tip: "about ~ で葛藤の中身、between A and B で何と何の板挟みかを表せます。inner conflict もほぼ同じ意味です。", ex: [["I'm having an internal conflict about quitting my job.", "仕事を辞めるかどうかで心の中で葛藤してる。"], ["There's a conflict between what I want and what I need.", "やりたいことと必要なことの間で葛藤がある。"]] },
+  6: { pattern: "形容詞 + 動詞-er（〜な人）", tip: "動詞に -er を付けて「〜する人」にし、形容詞で性質を表す型です。light sleeper（眠りが浅い人）、fast learner（覚えが早い人）など。反対の「夜型」は night owl。", ex: [["I'm not an early riser. I'm more of a night owl.", "私は朝型じゃなくて、どちらかというと夜型なんだ。"], ["She's a light sleeper, so be quiet.", "彼女は眠りが浅いから静かにね。"]] },
+  7: { pattern: "treat oneself to + 物 / treat 人 to + 物", tip: "to のあとにご褒美の中身を入れます。oneself を他の人に替えると「人に〜をおごる・ごちそうする」になります。", ex: [["I treated myself to a nice dinner after the exam.", "試験の後、自分へのご褒美に豪華な夕食を食べた。"], ["Let me treat you to lunch.", "ランチおごらせて。"]] },
+  8: { pattern: "learn one's lesson", tip: "one's は主語に合わせて my / his / your などに変えます。teach 人 a lesson にすると「人を懲らしめる・思い知らせる」です。", ex: [["He never learns his lesson.", "彼は全然懲りないね。"], ["I hope you've learned your lesson.", "これで懲りたでしょ。"]] },
+  9: { pattern: "~ is a no-go (for 人)", tip: "主語にダメなもの、for のあとに誰にとってかを入れます。計画・案について「ナシ・中止」の意味でも使えます。", ex: [["Sugar is a no-go for me right now.", "今は砂糖は絶対ダメなんだ。"], ["The outdoor plan is a no-go because of the rain.", "雨で外の計画はナシになった。"]] },
+  10: { pattern: "might as well + 動詞の原形", tip: "「他に良い選択肢もないし、どうせなら〜しよう」というニュアンス。前に so や since の理由を置くことが多いです。", ex: [["It's raining, so we might as well stay home.", "雨だし、どうせなら家にいようか。"], ["We're already here, so we might as well try it.", "せっかく来たんだから試してみようよ。"]] },
+  11: { pattern: "In theory, ~ , but in practice ~", tip: "「理論上は〜だけど、実際には〜」と、後ろに but in practice / but actually を続けるのが定番の流れです。", ex: [["In theory, this should work, but in practice it's harder.", "理論上はうまくいくはずだけど、実際はもっと難しい。"], ["In theory, I have the whole day off.", "一応、今日は丸一日休みのはずなんだけど。"]] },
+  12: { pattern: "have it in me to + 動詞 / don't have it in me", tip: "「〜するだけの気力・根性がある」。否定形でよく使います。I didn't know you had it in you! は「そんな力があったなんて！」という褒め言葉です。", ex: [["I don't have it in me to cook tonight.", "今夜は料理する気力がない。"], ["I didn't know you had it in you!", "あなたにそんな力があったなんて！"]] },
+  13: { pattern: "push past + 障害（the pain / the fear など）", tip: "it の部分を乗り越えたいものに入れ替えます。push through ~ もほぼ同じ意味です。", ex: [["You have to push past the fear.", "恐怖を振り切らなきゃ。"], ["I pushed through the pain and finished the race.", "痛みをこらえてレースを走りきった。"]] },
+  14: { pattern: "a sense of + 名詞（感情・感覚）", tip: "a sense of ~ で「〜という感覚」。relief（安心）、accomplishment（達成感）、urgency（焦り）など名詞を入れ替えて使えます。", ex: [["I felt a sense of relief when it was over.", "終わったときホッとした。"], ["Finishing the project gave me a sense of accomplishment.", "プロジェクトを終えて達成感があった。"]] },
+  15: { pattern: "get + 面倒なこと + out of the way", tip: "真ん中に片付けたいことを入れます。「先に済ませて、後をラクにする」というニュアンスです。", ex: [["Let's get the hard part out of the way first.", "大変な部分を先に片付けちゃおう。"], ["I got my homework out of the way before dinner.", "夕食前に宿題を済ませておいた。"]] },
+  16: { pattern: "be seeing things / be hearing things", tip: "必ず進行形で使います。目なら seeing、耳なら hearing と入れ替えられます。", ex: [["Am I seeing things, or is that my old teacher?", "見間違い？あれって昔の先生じゃない？"], ["I must be hearing things.", "空耳かな。"]] },
+  17: { pattern: "turn out (to be) ~ / It turns out (that) ~", tip: "「結果的に〜だと分かる」。to be のあとに形容詞・名詞、that のあとに文を入れます。How did it turn out?（結果どうだった？）も便利です。", ex: [["The party turned out to be a lot of fun.", "パーティーは結局すごく楽しかった。"], ["It turns out he was right.", "結局、彼が正しかったと分かった。"]] },
+  18: { pattern: "make it (in time) for / to ~", tip: "make it だけで「間に合う・たどり着く・都合がつく」。for + 予定、to + 場所・イベントを入れ替えます。", ex: [["Did you make it in time for the train?", "電車に間に合った？"], ["Sorry, I can't make it to the party.", "ごめん、パーティーには行けないや。"]] },
+  19: { pattern: "物・出来事 + lift(s) one's spirits", tip: "主語に元気をくれるものを入れます。cheer 人 up もほぼ同じ意味で、よりカジュアルです。", ex: [["A hot bath always lifts my spirits.", "熱いお風呂に入るといつも元気が出る。"], ["Your message really lifted my spirits.", "あなたのメッセージで本当に元気が出た。"]] },
+  20: { pattern: "the former（前者） / the latter（後者）", tip: "2つ挙げたあとに「前者・後者」と指すときのセットです。会話では「どっち？」への返事にも使えます。", ex: [["Tea or coffee? — The latter, please.", "紅茶とコーヒー、どっち？ — 後者（コーヒー）で。"], ["Of the two plans, I prefer the former.", "2つの案のうち、私は前者がいい。"]] },
+  21: { pattern: "one's go-to + 名詞", tip: "go-to を形容詞のように名詞の前に置くと「定番の〜・頼りになる〜」。song、restaurant、outfit などを入れ替えられます。", ex: [["This is my go-to recipe when I'm busy.", "これが忙しいときの定番レシピ。"], ["Who's your go-to person for advice?", "相談するとき頼りにしてる人は誰？"]] },
+  22: { pattern: "switch up + 物 / run out of + 物", tip: "switch it up で「変化をつける」。run out of ~ は「〜を切らす」で、物を主語にして Time is running out.（時間がなくなってきた）とも言えます。", ex: [["Let's switch up our workout routine.", "筋トレのメニューを少し変えてみよう。"], ["We ran out of milk again.", "また牛乳を切らしちゃった。"]] },
+  23: { pattern: "set 人 up for ~ / set the tone for ~", tip: "「〜のための土台を作る」。for のあとに the day、success などを入れます。set the tone for ~ は「〜の雰囲気を決める」です。", ex: [["A good breakfast sets you up for the day.", "しっかり朝食をとると1日がうまく回る。"], ["The first meeting set the tone for the whole project.", "最初の会議がプロジェクト全体の雰囲気を決めた。"]] },
+  24: { pattern: "lock 人 out of + 場所・物 / lock oneself out", tip: "out of のあとに締め出される場所・アカウントを入れます。lock myself out で「（鍵を中に置いたまま）自分を締め出す」、受け身 get locked out も頻出です。", ex: [["I locked myself out of my apartment.", "鍵を部屋に置いたまま締め出されちゃった。"], ["I got locked out of my account.", "アカウントにログインできなくなった。"]] },
+  25: { pattern: "put + 物 + into words", tip: "目的語が短ければ put it into words、長い（how much ~ など）ときは put into words + 目的語 の語順になります。", ex: [["It's hard to put my feelings into words.", "気持ちを言葉にするのは難しい。"], ["I can't put into words how grateful I am.", "どれほど感謝しているか言葉にできない。"]] },
+  26: { pattern: "cram A into B / cram for + 試験", tip: "A に詰め込むもの、B に場所・時間を入れます。cram for ~ は「〜に向けて一夜漬けする」です。", ex: [["Don't try to cram too much into one day.", "1日に予定を詰め込みすぎないで。"], ["I crammed for the test all night.", "テストに向けて一晩中詰め込み勉強した。"]] },
+  27: { pattern: "in a (sheer) panic / 物 + go off", tip: "sheer は「まったくの」という強調で、in a panic だけでもOKです。go off は主語に鳴る・作動するもの（alarm、bomb など）を入れます。", ex: [["The fire alarm went off in the middle of the night.", "真夜中に火災報知器が鳴った。"], ["She left in a panic.", "彼女は慌てて出ていった。"]] },
+  28: { pattern: "~ hit me / It hit me that ~", tip: "主語に疲れ・時差ボケ・実感などを入れると「どっと来る」。It hit me that + 文 にすると「〜とハッと気づいた」になります。", ex: [["The jet lag finally hit me.", "ついに時差ボケがどっと来た。"], ["It suddenly hit me that I'd left my keys at home.", "家に鍵を忘れたことにハッと気づいた。"]] },
+  29: { pattern: "ride it out / ride out + 困難", tip: "it を嵐・不況・つらい時期などに入れ替えられます。「じっと耐えて過ぎ去るのを待つ」イメージです。", ex: [["We just have to ride out the storm.", "嵐が過ぎるのを耐えて待つしかない。"], ["The market is down, but I'll ride it out.", "相場は下がってるけど、このまま耐えるよ。"]] },
+  30: { pattern: "~ is hanging (on) by a thread", tip: "人だけでなく、物（壊れかけのスマホ）や状況（試合・関係）を主語にしても使えます。", ex: [["My old phone is hanging on by a thread.", "古いスマホがもう壊れる寸前。"], ["Our chances of winning are hanging by a thread.", "勝てる可能性は首の皮一枚だ。"]] },
+  31: { pattern: "To be fair, ~ / To be fair to 人, ~", tip: "誰かを批判したあとに「でも公平に見ると」とフォローするときの前置きです。to 人 で誰をかばうかを示せます。", ex: [["To be fair, he did try his best.", "公平に言えば、彼は精一杯やったよ。"], ["To be fair to her, nobody told her about the change.", "彼女をかばうと、誰も変更を伝えてなかったんだ。"]] },
+  32: { pattern: "dread + 名詞 / dread + ~ing", tip: "dread to + 動詞 も文法的には可能（I dread to think ~ など）ですが、日常会話では dread getting out of bed のように ~ing を使うのが一般的です。進行形 I'm dreading ~ で「〜が憂うつ」もよく使います。", ex: [["I dread Monday mornings.", "月曜の朝が憂うつでたまらない。"], ["I'm dreading the meeting tomorrow.", "明日の会議が気が重い。"]] },
+  33: { pattern: "use + 物 + to one's advantage", tip: "真ん中に活かしたいもの（身長・経験・時間など）を入れます。one's は主語に合わせて変えます。", ex: [["Use your height to your advantage.", "背の高さを武器にしなよ。"], ["She used her experience abroad to her advantage.", "彼女は海外経験を強みに活かした。"]] },
+  34: { pattern: "let + 物 + go to waste / 物 + go(es) to waste", tip: "真ん中に無駄にしたくないもの（食べ物・才能・努力）を入れます。let を外して主語にすると「〜が無駄になる」です。", ex: [["Don't let the food go to waste.", "食べ物を無駄にしないで。"], ["All that effort went to waste.", "あの努力が全部無駄になった。"]] },
+  35: { pattern: "figure out + 名詞 / how・what など + 文", tip: "目的語に問題、how to ~（やり方）、what ~（何が）などを入れます。代名詞なら figure it out の語順になります。", ex: [["I can't figure out how to use this app.", "このアプリの使い方が分からない。"], ["Don't worry, we'll figure it out.", "大丈夫、なんとかなるよ。"]] },
+  36: { pattern: "take precautions (against ~)", tip: "against のあとに防ぎたいものを入れます。take steps / take measures（対策をとる）も同じ型です。", ex: [["Take precautions against the cold.", "風邪をひかないように用心してね。"], ["We need to take steps to fix this.", "これを直すための対策をとる必要がある。"]] },
+  37: { pattern: "~ is MIA / go MIA", tip: "物が見当たらないときにも、人が連絡つかなくなったときにも使えます。go MIA は「音信不通になる」です。", ex: [["My keys are MIA again.", "また鍵が行方不明。"], ["Sorry I went MIA last week.", "先週連絡つかなくてごめん。"]] },
+  38: { pattern: "start + 物 + off right", tip: "your day を the week、the meeting などに入れ替えられます。get off to a good start（好スタートを切る）も近い表現です。", ex: [["Let's start the meeting off right with some good news.", "良いニュースから会議を始めよう。"], ["We got off to a good start this year.", "今年は好スタートを切れた。"]] },
+  39: { pattern: "I could use + 名詞", tip: "「〜があると助かる」という控えめな言い方です。名詞を入れ替えるだけで使え、相手に You could use ~（〜が必要そうだね）とも言えます。", ex: [["I could use some help with this.", "これ、ちょっと手伝ってもらえると助かる。"], ["You look like you could use some sleep.", "少し寝たほうがよさそうだね。"]] },
+  40: { pattern: "one step ahead of / behind + 人・物", tip: "of のあとに比べる相手を入れます。stay one step ahead of ~ で「〜より常に先手を打つ」です。", ex: [["She's always one step ahead of me.", "彼女はいつも私の一歩先を行ってる。"], ["We need to stay one step ahead of the competition.", "競合より常に一歩先を行かないと。"]] },
+  41: { pattern: "have a lot / too much on one's plate", tip: "so much を a lot、too much に入れ替えられます。add to one's plate で「さらに仕事を増やす」です。", ex: [["I've got a lot on my plate this week.", "今週はやることが山積みだ。"], ["I don't want to add to your plate.", "これ以上あなたの負担を増やしたくない。"]] },
+  42: { pattern: "hold 人 accountable (for ~)", tip: "for のあとに責任を持たせる内容を入れます。受け身 be held accountable は「責任を問われる」です。", ex: [["Can you hold me accountable for my diet?", "ダイエットをサボらないように見張ってくれる？"], ["You'll be held accountable for the mistake.", "そのミスの責任を問われるよ。"]] },
+  43: { pattern: "~ go(es) downhill (from there)", tip: "主語に状況・健康・関係などを入れます。It went downhill from there.（そこから悪くなる一方だった）は定番です。", ex: [["It all went downhill from there.", "そこからは悪くなる一方だった。"], ["His health has been going downhill.", "彼の健康状態はどんどん悪くなっている。"]] },
+  44: { pattern: "have a compound effect (on ~) / The more ~, the more ~", tip: "小さな積み重ねが雪だるま式に大きくなるイメージです。動画のように The more ~, the more ~ の構文とセットで使うと説明しやすいです。", ex: [["Small habits have a compound effect over time.", "小さな習慣は時間とともに雪だるま式に効いてくる。"], ["The more you practice, the more confident you get.", "練習すればするほど自信がつく。"]] },
+  45: { pattern: "out of + 名詞（動機）", tip: "out of は「〜から（動機）」を表します。habit を curiosity（好奇心）、boredom（退屈）、kindness（親切心）などに入れ替えられます。", ex: [["I asked out of curiosity.", "好奇心から聞いてみた。"], ["I ate the whole bag out of boredom.", "暇すぎて一袋全部食べちゃった。"]] },
+  46: { pattern: "scramble to + 動詞 / scramble for + 名詞", tip: "to のあとに慌ててすること、for のあとに奪い合うものを入れます。", ex: [["Everyone scrambled to find a seat.", "みんな慌てて席を探した。"], ["People were scrambling for tickets.", "みんなチケットの奪い合いをしていた。"]] },
+  47: { pattern: "sleep in（わざとゆっくり寝る） / oversleep（寝過ごす）", tip: "sleep in は自分の意思でゆっくり寝ること。うっかり寝坊は oversleep で区別します。", ex: [["I love sleeping in on Sundays.", "日曜にゆっくり寝るのが大好き。"], ["I overslept and missed the bus.", "寝坊してバスに乗り遅れた。"]] },
+  48: { pattern: "go back to one's roots / get back to basics", tip: "故郷に帰る意味のほか、音楽・仕事などで「原点に立ち返る」にも使えます。get back to basics は「基本に戻る」です。", ex: [["The band went back to their roots on this album.", "このアルバムでバンドは原点回帰した。"], ["Let's get back to basics.", "基本に立ち返ろう。"]] },
+  49: { pattern: "come up with + アイデア・計画・言い訳", tip: "with のあとに思いつくものを入れます。idea、plan、name、excuse などが定番です。", ex: [["She came up with a great idea.", "彼女がすごく良いアイデアを思いついた。"], ["He always comes up with an excuse.", "彼はいつも言い訳をひねり出す。"]] },
+  50: { pattern: "follow through on + 約束・計画 / follow through", tip: "on のあとに promise、plan、goal などを入れます。目的語なしで He never follows through.（口だけで最後までやらない）とも言えます。", ex: [["Make sure you follow through on your promises.", "約束はちゃんと最後まで守ってね。"], ["He has great ideas, but he never follows through.", "彼はアイデアはいいけど、実行が続かない。"]] },
+};
+
 const VID = 'Myp2On95hJM';
 const KEY = 'idioms_' + VID;
 const ytUrl = s => `https://www.youtube.com/watch?v=${VID}&t=${s}s`;
@@ -297,7 +357,8 @@ function render() {
     const done = learned.has(item.id);
     if (l !== 'all' && String(item.lesson) !== l) return;
     if (onlyUnlearned && done) return;
-    if (q && ![item.phrase, item.meaning, item.note, item.exEn, item.exJa].some(t => t.toLowerCase().includes(q))) return;
+    const u = usage[item.id];
+    if (q && ![item.phrase, item.meaning, item.note, item.exEn, item.exJa, u.pattern, u.tip, ...u.ex.flat()].some(t => t.toLowerCase().includes(q))) return;
     shown++;
     const on = current && current.id === item.id;
     const card = document.createElement('article');
@@ -314,6 +375,12 @@ function render() {
         <div class="meaning">${item.meaning}</div>
         <div class="note">${item.note}</div>
         <div class="ex"><div class="ex-en">${item.exEn}</div><div class="ex-ja">${item.exJa}</div></div>
+        <div class="apply">
+          <div class="apply-label">応用 · 入れ替えて使える型</div>
+          <div class="apply-pattern">${u.pattern}</div>
+          <div class="apply-tip">${u.tip}</div>
+          <ul>${u.ex.map(([en, ja]) => `<li><span class="ex-en">${en}</span><span class="ex-ja">${ja}</span></li>`).join('')}</ul>
+        </div>
       </div>
       <div class="foot">
         <label><input type="checkbox" id="learned-${item.id}" ${done ? 'checked' : ''}> 覚えた</label>
